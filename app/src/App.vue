@@ -1,5 +1,13 @@
 <template>
   <div id="app">
+    <audio
+      controls
+      id="bg-music"
+      src="https://m801.music.126.net/20240119150305/60fc8c88912aded5843d2df7d1dcc0aa/jdyyaac/555e/075b/555f/b4dfe0dbec0155e1425eb56d93fad737.m4a"
+      autoplay
+      loop
+      style="display: none"
+    ></audio>
     <StyleEditor ref="styleEditor" :code="currentStyle"></StyleEditor>
     <ResumeEditor
       ref="resumeEditor"
@@ -12,6 +20,7 @@
 import StyleEditor from "./components/StyleEditor";
 import ResumeEditor from "./components/ResumeEditor";
 import "./assets/reset.css";
+
 let isPc = (function () {
   var userAgentInfo = navigator.userAgent;
   var Agents = [
@@ -56,7 +65,7 @@ export default {
   },
   data() {
     return {
-      interval: 0,
+      interval: 25,
       currentStyle: "",
       enableHtml: false,
       fullStyle: [
@@ -250,6 +259,17 @@ html{
   },
   created() {
     this.makeResume();
+  },
+  mounted() {
+    window.addEventListener("click", function () {
+      var audio = document.getElementById("bg-music");
+      audio.play();
+    });
+
+    window.addEventListener("touchstart", function () {
+      var audio = document.getElementById("bg-music");
+      audio.play();
+    });
   },
 
   methods: {
