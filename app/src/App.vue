@@ -1,13 +1,14 @@
 <template>
   <div id="app">
-    <audio
-      controls
-      id="bg-music"
-      src="https://ri-sycdn.kuwo.cn/3beb740e2b7b4978541b53eec079aca8/65aa30e6/resource/n1/87/41/2670250306.mp3?from=vip"
+    <aplayer
+      ref="aplayerId"
+      style="position: fixed; right: 0; bottom: 0; z-index: 999"
+      :music="musics[0]"
       autoplay
-      loop
-      style="display: none"
-    ></audio>
+      mini
+      mutex
+    ></aplayer>
+
     <StyleEditor ref="styleEditor" :code="currentStyle"></StyleEditor>
     <ResumeEditor
       ref="resumeEditor"
@@ -20,7 +21,7 @@
 import StyleEditor from "./components/StyleEditor";
 import ResumeEditor from "./components/ResumeEditor";
 import "./assets/reset.css";
-
+import aplayer from "vue-aplayer";
 let isPc = (function () {
   var userAgentInfo = navigator.userAgent;
   var Agents = [
@@ -62,9 +63,19 @@ export default {
   components: {
     StyleEditor,
     ResumeEditor,
+    aplayer,
   },
   data() {
     return {
+      musics: [
+        {
+          title: "my love",
+          artist: "",
+          url: "https://ri-sycdn.kuwo.cn/3beb740e2b7b4978541b53eec079aca8/65aa30e6/resource/n1/87/41/2670250306.mp3?from=vip",
+          pic: "",
+          lrc: "",
+        },
+      ],
       interval: 25,
       currentStyle: "",
       enableHtml: false,
@@ -87,7 +98,7 @@ export default {
 /* 白色背景太单调了。来点背景 */
 html {
   color: rgb(222,222,222);
-  background: rgb(0,43,54); 
+  background: rgb(0,43,54);
 }
 /* 文字太近了 */
 .styleEditor {
@@ -111,11 +122,11 @@ html{
           perspective: 1000px;
 }
 .styleEditor {
-  position: fixed; 
+  position: fixed;
   ${isPc ? "left: 0;" : "left:0;right:0;margin:auto;"}
-  top: 0; 
-  -webkit-transition: none; 
-  transition: none;   
+  top: 0;
+  -webkit-transition: none;
+  transition: none;
   ${
     isPc
       ? "-webkit-transform: rotateY(10deg) translateZ(-100px) ;transform: rotateY(10deg) translateZ(-100px) ;"
@@ -128,10 +139,10 @@ html{
 
 /* 再来一张照片 */
 .resumeEditor{
-  position: fixed; 
+  position: fixed;
   ${isPc ? "right: 0;" : "left:0;right:0;margin:auto;"}
   ${isPc ? "top: 0;" : "bottom:2%;"}
-  padding: .5em;  
+  padding: .5em;
   ${isPc ? "margin: .5em;" : ""}
   ${isPc ? "width: 48%;height: 96%;" : "width: 96%;height: 50%;"}
   border: 1px solid;
@@ -185,8 +196,8 @@ html{
   counter-reset: section;
 }
 .resumeEditor ol li::before {
-  counter-increment: section;            
-  content: counters(section, ".") " ";  
+  counter-increment: section;
+  content: counters(section, ".") " ";
   margin-right: .5em;
 }
 .resumeEditor blockquote {
@@ -251,7 +262,7 @@ html{
 4. 胡闹厨房
 5. ……
 
-> 【Wishing you happiness today, tomorrow, and always!】  
+> 【Wishing you happiness today, tomorrow, and always!】
 > 祝老婆生日快乐，幸福安康，永远美丽动人!
 
 `,
@@ -261,14 +272,16 @@ html{
     this.makeResume();
   },
   mounted() {
-    window.addEventListener("click", function () {
-      var audio = document.getElementById("bg-music");
-      audio.play();
+    window.addEventListener("touchstart", () => {
+      if (!this.$refs.aplayerId.isPlaying) {
+        this.$refs.aplayerId.play();
+      }
     });
 
-    window.addEventListener("touchstart", function () {
-      var audio = document.getElementById("bg-music");
-      audio.play();
+    window.addEventListener("click", () => {
+      if (!this.$refs.aplayerId.isPlaying) {
+        this.$refs.aplayerId.play();
+      }
     });
   },
 
