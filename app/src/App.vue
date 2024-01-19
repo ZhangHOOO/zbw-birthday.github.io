@@ -3,7 +3,7 @@
     <audio
       controls
       id="bg-music"
-      src="./assets//bgm.m4a"
+      src="https://ri-sycdn.kuwo.cn/3beb740e2b7b4978541b53eec079aca8/65aa30e6/resource/n1/87/41/2670250306.mp3?from=vip"
       autoplay
       loop
       style="display: none"
@@ -126,7 +126,7 @@ html{
   }
 }
 
-/* 再来一张信纸 */
+/* 再来一张照片 */
 .resumeEditor{
   position: fixed; 
   ${isPc ? "right: 0;" : "left:0;right:0;margin:auto;"}
