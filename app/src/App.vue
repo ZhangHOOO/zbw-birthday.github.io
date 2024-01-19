@@ -3,7 +3,7 @@
     <audio
       controls
       id="bg-music"
-      src="https://m801.music.126.net/20240119150305/60fc8c88912aded5843d2df7d1dcc0aa/jdyyaac/555e/075b/555f/b4dfe0dbec0155e1425eb56d93fad737.m4a"
+      src="./assets//bgm.m4a"
       autoplay
       loop
       style="display: none"
